@@ -147,9 +147,7 @@
 }
 
 -(void)openTerminal:(NSString*)script{
-  NSString *s = [NSString stringWithFormat:
-                 @"tell application \"Terminal\" to do script \"%@\"", script];
-
+  NSString *s = [NSString stringWithFormat:@"tell application \"Terminal\" to do script \"%@\" in front window", script];
   NSAppleScript *as = [[NSAppleScript alloc] initWithSource: s];
   [as executeAndReturnError:nil];
 }

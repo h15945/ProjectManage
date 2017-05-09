@@ -17,7 +17,7 @@
                BlueprintIdentifier = "98BA36C11EA741BC00B53BD1"
                BuildableName = "projectsCommands.app"
                BlueprintName = "projectsCommands"
-               ReferencedContainer = "container:&#x9879;&#x76ee;&#x52a9;&#x624b;.xcodeproj">
+               ReferencedContainer = "container:projectManager.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "98BA36C11EA741BC00B53BD1"
             BuildableName = "projectsCommands.app"
             BlueprintName = "projectsCommands"
-            ReferencedContainer = "container:&#x9879;&#x76ee;&#x52a9;&#x624b;.xcodeproj">
+            ReferencedContainer = "container:projectManager.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "98BA36C11EA741BC00B53BD1"
             BuildableName = "projectsCommands.app"
             BlueprintName = "projectsCommands"
-            ReferencedContainer = "container:&#x9879;&#x76ee;&#x52a9;&#x624b;.xcodeproj">
+            ReferencedContainer = "container:projectManager.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "98BA36C11EA741BC00B53BD1"
             BuildableName = "projectsCommands.app"
             BlueprintName = "projectsCommands"
-            ReferencedContainer = "container:&#x9879;&#x76ee;&#x52a9;&#x624b;.xcodeproj">
+            ReferencedContainer = "container:projectManager.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
