@@ -147,8 +147,17 @@
 }
 
 -(void)openTerminal:(NSString*)script{
+
+//  NSString *scriptbefore = @"SERVICE='Terminal';if ps ax | grep -v grep | grep $SERVICE > /dev/null ;then echo \"$SERVICE service running, everything is fine\" ;else echo \"$SERVICE is not running\"; echo \"$SERVICE is not running!\" | mail -s \"$SERVICE down\" root ;fi;";
+//  [self unixSinglePathCommandWithReturn:scriptbefore];
+
   NSString *s = [NSString stringWithFormat:@"tell application \"Terminal\" to do script \"%@\" in front window", script];
   NSAppleScript *as = [[NSAppleScript alloc] initWithSource: s];
   [as executeAndReturnError:nil];
+
+  [[[NSAppleScript alloc] initWithSource: @"tell application \"System Events\" to set frontmost of process \"Terminal\" to true"] executeAndReturnError:nil];
+
+
+
 }
 @end
