@@ -949,6 +949,16 @@
                                         <view key="contentView" ambiguous="YES" id="VVu-W0-c2r">
                                             <rect key="frame" x="1" y="1" width="231" height="201"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b5Q-vS-sdb">
+                                                    <rect key="frame" x="18" y="25" width="59" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" title="Notify" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Mrn-fd-ibz">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
+                                            </subviews>
                                         </view>
                                     </box>
                                 </subviews>
@@ -960,6 +970,7 @@
                         <outlet property="comboBox" destination="OLt-EZ-dxw" id="Auy-Zh-Nz5"/>
                         <outlet property="commitText" destination="VyQ-fW-prg" id="OjQ-iw-WLh"/>
                         <outlet property="generatedCode" destination="53X-T1-8fm" id="yIr-cP-RvJ"/>
+                        <outlet property="notifyBox" destination="b5Q-vS-sdb" id="Z7h-x4-Tky"/>
                         <outlet property="projectNameLabel" destination="DQq-ZT-Fca" id="rPD-rl-VHd"/>
                         <outlet property="social" destination="Ixq-uC-UoM" id="qi0-Y9-f1H"/>
                         <outlet property="videos" destination="4Yr-1q-LyQ" id="flL-kn-LR0"/>

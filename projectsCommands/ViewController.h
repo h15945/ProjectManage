@@ -23,7 +23,7 @@
 @property(nonatomic,weak)IBOutlet NSButton*broadCast;
 @property(nonatomic,weak)IBOutlet NSButton*videos;
 @property(nonatomic,weak)IBOutlet NSButton*social;
-
+@property(nonatomic,weak)IBOutlet NSButton*notifyBox;
 
 
 @end

@@ -23,8 +23,29 @@
   }
   [self.comboBox selectItemAtIndex:self.seletedID];
   [self refreshUI];
+  [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(timerFired) userInfo:nil repeats:YES];
 }
 
+
+-(void)timerFired{
+  if ([self.notifyBox state] == NSOnState) {
+    NSURL *url = [NSURL URLWithString:@"http://cloud.chinajnc.cn/index.php/Market/notifycheck"];
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      if (!error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+          if ([dict[@"info"] integerValue] == 0) {
+            [NSApp dockTile].badgeLabel = [NSString stringWithFormat:@"%@",dict[@"data"][@"diff"]];
+          }
+        });
+      }
+    }];
+    [task resume];
+  } else {
+    [NSApp dockTile].badgeLabel = @"";
+  }
+
+}
 
 -(void)refreshUI{
   [self.projectNameLabel setStringValue:[NSString stringWithFormat:@"当前项目是:%@",self.projectName]];
@@ -149,12 +170,14 @@
 -(void)openTerminal:(NSString*)script{
 
 //  NSString *scriptbefore = @"SERVICE='Terminal';if ps ax | grep -v grep | grep $SERVICE > /dev/null ;then echo \"$SERVICE service running, everything is fine\" ;else echo \"$SERVICE is not running\"; echo \"$SERVICE is not running!\" | mail -s \"$SERVICE down\" root ;fi;";
-//  [self unixSinglePathCommandWithReturn:scriptbefore];
+//  NSString * outs = [self unixSinglePathCommandWithReturn:scriptbefore];
 
   NSString *s = [NSString stringWithFormat:@"tell application \"Terminal\" to do script \"%@\" in front window", script];
   NSAppleScript *as = [[NSAppleScript alloc] initWithSource: s];
   [as executeAndReturnError:nil];
-
+  //NSDictionary *r = [NSDictionary new];;
+  //[[[NSAppleScript alloc] initWithSource: @"tell application \"Terminal\" to activate"] executeAndReturnError:&r];
+  [[[NSAppleScript alloc] initWithSource: @"tell application \"System Events\" to set visible of process \"Terminal\" to false"] executeAndReturnError:nil];
   [[[NSAppleScript alloc] initWithSource: @"tell application \"System Events\" to set frontmost of process \"Terminal\" to true"] executeAndReturnError:nil];
 
 
