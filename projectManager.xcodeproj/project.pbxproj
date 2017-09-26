@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98AAFC611F7A31A000602F0C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98AAFC601F7A31A000602F0C /* SystemConfiguration.framework */; };
 		98BA36C71EA741BC00B53BD1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BA36C61EA741BC00B53BD1 /* AppDelegate.m */; };
 		98BA36CA1EA741BC00B53BD1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BA36C91EA741BC00B53BD1 /* main.m */; };
 		98BA36CD1EA741BC00B53BD1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BA36CC1EA741BC00B53BD1 /* ViewController.m */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		98AAFC601F7A31A000602F0C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		98BA36C21EA741BC00B53BD1 /* projectsCommands.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = projectsCommands.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98BA36C51EA741BC00B53BD1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		98BA36C61EA741BC00B53BD1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -31,17 +33,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98AAFC611F7A31A000602F0C /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		98AAFC5F1F7A31A000602F0C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				98AAFC601F7A31A000602F0C /* SystemConfiguration.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		98BA36B91EA741BC00B53BD1 = {
 			isa = PBXGroup;
 			children = (
 				98BA36C41EA741BC00B53BD1 /* projectsCommands */,
 				98BA36C31EA741BC00B53BD1 /* Products */,
+				98AAFC5F1F7A31A000602F0C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

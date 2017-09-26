@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-
+#import <SystemConfiguration/CaptiveNetwork.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 @implementation ViewController{
   
 }
@@ -29,13 +30,27 @@
 
 -(void)timerFired{
   if ([self.notifyBox state] == NSOnState) {
-    NSURL *url = [NSURL URLWithString:@"http://cloud.chinajnc.cn/index.php/Market/notifycheck"];
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSString *ssidcmd = @"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk '/ SSID/ {print substr($0, index($0, $2))}'";
+    NSString *ssid = [self unixSinglePathCommandWithReturn:ssidcmd];
+    bool proxy = false;
+    if ([ssid containsString:@"OfficeWiFi"]) {
+      proxy = true;
+    }
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    config.timeoutIntervalForRequest = 4;
+    config.connectionProxyDictionary = @{       @"HTTPEnable"  : @(proxy),
+                                                (NSString *)kCFStreamPropertyHTTPProxyHost  : @"10.14.36.100",
+                                                (NSString *)kCFStreamPropertyHTTPProxyPort  : @(8080),
+                                                };;
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+
+    NSURL *url = [NSURL URLWithString:@"http://cloud.chinajnc.cn/index.php/Change/checkProfit_app"];
+    NSURLSessionDataTask *task = [session dataTaskWithRequest:[NSURLRequest requestWithURL:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       if (!error) {
         dispatch_async(dispatch_get_main_queue(), ^{
           NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
           if ([dict[@"info"] integerValue] == 0) {
-            [NSApp dockTile].badgeLabel = [NSString stringWithFormat:@"%@",dict[@"data"][@"diff"]];
+            [NSApp dockTile].badgeLabel = [NSString stringWithFormat:@"%@",dict[@"data"][@"profit"]];
           }
         });
       }
