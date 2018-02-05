@@ -36,23 +36,30 @@
     if ([ssid containsString:@"OfficeWiFi"]) {
       proxy = true;
     }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *ip = [defaults objectForKey:@"savedip"]?:@"10.14.36.100";
+
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     config.timeoutIntervalForRequest = 4;
     config.connectionProxyDictionary = @{       @"HTTPEnable"  : @(proxy),
-                                                (NSString *)kCFStreamPropertyHTTPProxyHost  : @"10.14.36.100",
+                                                (NSString *)kCFStreamPropertyHTTPProxyHost  : ip,
                                                 (NSString *)kCFStreamPropertyHTTPProxyPort  : @(8080),
                                                 };;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
-
+    session.configuration.HTTPAdditionalHeaders = @{@"User-Agent": @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"};
     NSURL *url = [NSURL URLWithString:@"http://cloud.chinajnc.cn/index.php/Change/checkProfit_app"];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:[NSURLRequest requestWithURL:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
       if (!error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-          NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-          if ([dict[@"info"] integerValue] == 0) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        NSString *s = [[NSString alloc] initWithData:data encoding:enc];
+        if ([dict[@"info"] integerValue] == 0) {
+          dispatch_async(dispatch_get_main_queue(), ^{
             [NSApp dockTile].badgeLabel = [NSString stringWithFormat:@"%@",dict[@"data"][@"profit"]];
-          }
-        });
+          });
+
+        }
+
       }
     }];
     [task resume];
@@ -116,7 +123,19 @@
 }
 
 -(IBAction)commit:(id)sender{
-  NSString *script = [NSString stringWithFormat:@"cd /Users/rory/%@;git st;git add .;git ci -m %@ ;git push;git st;",self.projectName,[_commitText stringValue]];
+  NSString *content = [_commitText stringValue];
+  if ([content hasPrefix:@"savedip:"]) {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[content stringByReplacingOccurrencesOfString:@"savedip:" withString:@""] forKey:@"seletedID"];
+    [defaults synchronize];
+    return;
+  }
+
+
+
+
+
+  NSString *script = [NSString stringWithFormat:@"cd /Users/rory/%@;git st;git add .;git ci -m %@ ;git push;git st;",self.projectName,content];
   [self openTerminal:script];
 }
 
